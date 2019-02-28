@@ -16,7 +16,7 @@ import (
 	"github.com/stevenleeg/gobb/models"
 )
 
-// Returns a list of all available themes
+// ListTemplates returns a list of all available themes
 func ListTemplates() []string {
 	names := []string{"default"}
 

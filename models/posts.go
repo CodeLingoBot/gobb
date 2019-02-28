@@ -49,7 +49,7 @@ func GetPost(id int) (*Post, error) {
 	return obj.(*Post), err
 }
 
-// Returns a pointer to the OP and a slice of post pointers for the given
+// GetThread returns a pointer to the OP and a slice of post pointers for the given
 // page number in the thread.
 func GetThread(parent_id, page_id int) (error, *Post, []*Post) {
 	db := GetDbSession()
@@ -78,7 +78,7 @@ func GetThread(parent_id, page_id int) (error, *Post, []*Post) {
 	return nil, op.(*Post), child_posts
 }
 
-// Returns the number of posts (on every board/thread)
+// GetPostCount returns the number of posts (on every board/thread)
 func GetPostCount() (int64, error) {
 	db := GetDbSession()
 
@@ -106,7 +106,7 @@ func (post *Post) PostGet(s gorp.SqlExecutor) error {
 	return nil
 }
 
-// Ensures that a post is valid
+// Validate ensures that a post is valid
 func (post *Post) Validate() error {
 	if post.BoardId == 0 {
 		return errors.New("Board does not exist")
@@ -135,7 +135,7 @@ func (post *Post) GetLatestPost() *Post {
 	return latest
 }
 
-// Returns the number of pages contained by a thread. This won't work on
+// GetPagesInThread returns the number of pages contained by a thread. This won't work on
 // post structs that have ParentIds.
 func (post *Post) GetPagesInThread() int {
 	db := GetDbSession()
@@ -193,7 +193,7 @@ func (post *Post) DeleteAllChildren() error {
 	return err
 }
 
-// Get the thread id for a post
+// GetThreadId gets the thread id for a post
 func (post *Post) GetThreadId() int64 {
 	if post.ParentId.Valid {
 		return post.ParentId.Int64
